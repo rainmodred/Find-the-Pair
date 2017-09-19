@@ -1,18 +1,64 @@
+footer {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+
 .game {
   margin: 50px auto;
   width: 500px;
-  display: flex;
+  display: flex;  
 }
-
-.card {
-  background: url(../img/help_filled-100.png);
+.card {  
   width: 100px;
   height: 100px;
   margin: 1px;
-  border: 1px solid #CACAD8;
+  border: 1px solid #CACAD8;  
+}
+
+.quest {
+  background: url(../img/help_filled-100.png);
   cursor: pointer;
 }
 
-.card:hover {
+.quest:hover {
   background: url(../img/help-100.png);
+}
+
+.moon {
+  background: url(../img/icons8-Moon-100.png)
+}
+
+.new-moon {
+  background: url(../img/icons8-NewMoon-100.png)  
+}
+
+.star {
+  background: url(../img/icons8-Star-100.png)
+}
+
+.summer {
+  background: url(../img/icons8-Summer-100.png)
+}
+
+.winter { 
+  background: url(../img/icons8-Winter-100.png)
+}
+
+.goat {
+  background: url(../img/icons8-YearofGoat-100.png)
+}
+
+.rabbit {
+  background: url(../img/icons8-YearofRabbit-100.png)
+}
+
+.rat { 
+  background: url(../img/icons8-YearofRat-100.png)
+}
+
+.credit {
+
 }
