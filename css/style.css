@@ -1,0 +1,18 @@
+.game {
+  margin: 50px auto;
+  width: 500px;
+  display: flex;
+}
+
+.card {
+  background: url(../img/help_filled-100.png);
+  width: 100px;
+  height: 100px;
+  margin: 1px;
+  border: 1px solid #CACAD8;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: url(../img/help-100.png);
+}
