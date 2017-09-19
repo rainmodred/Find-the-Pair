@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 15px;
+}
 footer {
   width: 600px;
   margin: 0 auto;
@@ -5,10 +12,29 @@ footer {
   justify-content: center;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;  
+}
+
+h1, h2, h3, h4,a,p {
+  text-align: center;
+}
+
+
+
+.time-left { 
+  margin-left: 20%;
+  
+}
+
+.lives {
+  margin-right: 20%;
+}
 
 .game {
   margin: 50px auto;
-  width: 500px;
+  width: 415px;
   display: flex;  
 }
 .card {  
@@ -57,6 +83,10 @@ footer {
 
 .rat { 
   background: url(../img/icons8-YearofRat-100.png)
+}
+
+.sigma {
+  background: url(../img/icons8-Sigma-100.png)
 }
 
 .credit {
