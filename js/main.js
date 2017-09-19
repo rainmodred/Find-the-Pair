@@ -40,7 +40,7 @@ cards.forEach((card, index) => {
       return;
     };
 
-    card.classList.remove('quest');
+    card.classList.remove('flipped');
     card.classList.add(cardName);
     card.dataset.name = cardName;
     //need stack?
@@ -68,7 +68,7 @@ function closeCard(cards) {
   setTimeout(() => {
     cards.forEach((card) => {
       card.classList.remove(card.dataset.name);
-      card.classList.add('quest');
+      card.classList.add('flipped');
     });
   }, 500);
 }
