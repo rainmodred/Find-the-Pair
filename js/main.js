@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
     this.lives = 12;
-    this.timeLeft = 30;
+    this.moves = 0;
   }
   newGame() {
     this.cardsGrid.sort((a, b) => {
@@ -12,15 +12,18 @@ class Game {
 
   move() {
     this.lives--;
+    this.moves++;
+    if (this.lives === 0) {
+      this.gameOver();
+    }
+  }
+
+  gameOver() {
+    console.log('game over');
   }
   render() {
-
   }
-
-
 }
-
-
 
 
 const game = new Game();
@@ -63,8 +66,6 @@ cards.forEach((card, index) => {
 
 function closeCard(cards) {
   console.log(cards);
-
-
   setTimeout(() => {
     cards.forEach((card) => {
       card.classList.remove(card.dataset.name);
