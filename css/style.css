@@ -22,6 +22,42 @@ h1, h2, h3, h4,a,p {
   text-align: center;
 }
 
+.game-over {
+  width: 100%;
+  min-height: 100%;
+  background-color: rgb(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: fixed;
+  top:0px;
+  background-color: #f9f9f9;
+}
+
+
+.won {
+  display: none;
+}
+
+.lost {
+  display: none;
+}
+
+.status {
+  display: block;
+  margin: 40px auto 0px auto;
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+  background-color: #c5c5c5;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #000;
+}
+
+.play-again {
+  cursor: pointer;
+  display: block;
+
+}
+
 .moves-container { 
   margin-left: 20%;
   

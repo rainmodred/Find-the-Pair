@@ -1,37 +1,78 @@
 class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
-    this.lives = 12;
+    this.lives = 2;
     this.moves = 0;
+    this.opened = 0;
   }
   newGame() {
     this.moves = 0;
-    this.lives = 12;
+    this.lives = 1;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
+    updateDom();
   }
 
   updateLives() {
-    this.lives--;   
-    if (this.lives === 0) {
-      this.gameOver();
-    }
+    this.lives--;
+
+
   }
   updateMoves() {
     this.moves++;
+
   }
 
-  gameOver() {
-    console.log('game over');
+  checkStatus() {
+    if (this.lives === 0) {
+      return 'lost';
+    };
+
+    if (this.opened === 8) {
+      return 'won';
+    };
+
+    return null;
   }
-  render() {
-  }
+
+
+  render() {}
 }
 
 const lives = document.querySelector('.lives');
 const moves = document.querySelector('.moves');
 const game = new Game();
+game.newGame();
+const gameOverP = document.querySelector('.game-over');
+gameOverP.style.display = 'none';
+
+
+
+function updateDom() {
+  lives.innerHTML = game.lives;
+  moves.innerHTML = game.moves;
+}
+
+function showPopup(status) {  
+  const domSt = document.getElementsByClassName(status)[0];
+  const spn = document.createElement('span');
+  spn.classList.add('play-again');
+  spn.innerHTML = 'Play again';
+
+  gameOverP.style.display = 'block';
+  console.log(domSt);
+  domSt.classList.add('status');
+  domSt.appendChild(spn);
+
+
+  spn.addEventListener('click', () => {
+    gameOverP.style.display = 'none';    
+    domSt.classList.remove('status');
+    game.newGame();
+    spn.remove();
+  });
+}
 
 
 
@@ -50,9 +91,9 @@ cards.forEach((card, index) => {
     card.classList.remove('flipped');
     card.classList.add(cardName);
     card.dataset.name = cardName;
-    clickedCards.push(card);   
+    clickedCards.push(card);
 
-    
+
     if (clickedCards.length > 1) {
       game.updateMoves();
       moves.innerHTML = game.moves;
@@ -60,10 +101,21 @@ cards.forEach((card, index) => {
         game.updateLives();
         lives.innerHTML = game.lives;
         closeCard(clickedCards);
+        if ('lost' === game.checkStatus()) {
+          showPopup('lost');
+        }
+      } else {
+        if (clickedCards[0].dataset.name === clickedCards[1].dataset.name) {
+          game.updateMoves();
+          let status = game.checkStatus();
+          if (status === 'won') {
+            showPopup('won');
+          }          
+        }
       }
     }
     if (clickedCards.length === 2) clickedCards = [];
-   
+
 
   })
 });
