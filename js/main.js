@@ -5,17 +5,21 @@ class Game {
     this.moves = 0;
   }
   newGame() {
+    this.moves = 0;
+    this.lives = 12;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
   }
 
-  move() {
-    this.lives--;
-    this.moves++;
+  updateLives() {
+    this.lives--;   
     if (this.lives === 0) {
       this.gameOver();
     }
+  }
+  updateMoves() {
+    this.moves++;
   }
 
   gameOver() {
@@ -25,10 +29,11 @@ class Game {
   }
 }
 
-
+const lives = document.querySelector('.lives');
+const moves = document.querySelector('.moves');
 const game = new Game();
 
-console.log(game);
+
 
 
 let clickedCards = [];
@@ -42,25 +47,24 @@ cards.forEach((card, index) => {
       event.preventDefault();
       return;
     };
-
     card.classList.remove('flipped');
     card.classList.add(cardName);
     card.dataset.name = cardName;
-    //need stack?
+    clickedCards.push(card);   
 
-    clickedCards.push(card);
-
-    // console.dir(clickedCards);
-
+    
     if (clickedCards.length > 1) {
+      game.updateMoves();
+      moves.innerHTML = game.moves;
       if (clickedCards[0].dataset.name !== clickedCards[1].dataset.name) {
-        game.move();
+        game.updateLives();
+        lives.innerHTML = game.lives;
         closeCard(clickedCards);
       }
     }
     if (clickedCards.length === 2) clickedCards = [];
+   
 
-    //game.move(clickedCard );
   })
 });
 

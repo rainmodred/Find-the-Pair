@@ -22,12 +22,12 @@ h1, h2, h3, h4,a,p {
   text-align: center;
 }
 
-.moves { 
+.moves-container { 
   margin-left: 20%;
   
 }
 
-.lives {
+.lives-container {
   margin-right: 20%;
 }
 
@@ -119,8 +119,4 @@ h1, h2, h3, h4,a,p {
 
 .sigma {
   background: url(../img/icons8-Sigma-100.png)
-}
-
-.credit {
-
 }
