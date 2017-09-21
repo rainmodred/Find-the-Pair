@@ -1,13 +1,16 @@
 class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
-    this.lives = 2;
+    this.lives = 12;
     this.moves = 0;
     this.opened = 0;
   }
   newGame() {
+
+    //duplicate mouse bug
+    //you won mesage bug
     this.moves = 0;
-    this.lives = 1;
+    this.lives = 12;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
@@ -35,6 +38,9 @@ class Game {
 
     return null;
   }
+  reveal() {
+    
+  }
 
 
   render() {}
@@ -61,7 +67,6 @@ function showPopup(status) {
   spn.innerHTML = 'Play again';
 
   gameOverP.style.display = 'block';
-  console.log(domSt);
   domSt.classList.add('status');
   domSt.appendChild(spn);
 
@@ -82,7 +87,7 @@ const cards = Array.from(document.querySelectorAll('.card'));
 cards.forEach((card, index) => {
   card.addEventListener('click', (event) => {
     let cardName = game.cardsGrid[index];
-
+    console.log(game.cardsGrid)
     //prevent click after reveal
     if ([...card.classList].indexOf(cardName) !== -1) {
       event.preventDefault();
