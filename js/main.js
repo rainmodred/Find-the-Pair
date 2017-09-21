@@ -1,16 +1,14 @@
 class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
-    this.lives = 10;
+    this.lives = 111;
     this.moves = 0;
-    this.opened = 0;
+    this.opened = 7;
   }
-  newGame() {
-
-    //duplicate mouse bug
-    //you won mesage bug
+  newGame() {    
+    this.opened = 7;
     this.moves = 0;
-    this.lives = 10;
+    this.lives = 111;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
@@ -24,7 +22,9 @@ class Game {
   }
   updateMoves() {
     this.moves++;
-
+  }
+  updateOpened() {
+    this.opened++;
   }
 
   checkStatus() {
@@ -60,18 +60,18 @@ function reveal() {
   })
 }
 
-function deleteClasses() {
-  const cards = Array.from(document.querySelectorAll('.card'));
-  cards.forEach((card,ind)=> {
-    if (card.classList.length > 1) {
-      card.classList.forEach((item)=> {
-        if (item !== 'card' && item !== 'flipped') {
-          card.classList.remove(item);
-        }
-      })
-    }
-  })
-}
+// function deleteClasses() {
+//   const cards = Array.from(document.querySelectorAll('.card'));
+//   cards.forEach((card,ind)=> {
+//     if (card.classList.length > 1) {
+//       card.classList.forEach((item)=> {
+//         if (item !== 'card' && item !== 'flipped') {
+//           card.classList.remove(item);
+//         }
+//       })
+//     }
+//   })
+// }
 
 function updateDom() {
   lives.innerHTML = game.lives;
@@ -79,7 +79,7 @@ function updateDom() {
 }
 
 function showPopup(status) {  
-  deleteClasses();
+
   const domSt = document.getElementsByClassName(status)[0];
   const spn = document.createElement('span');
   spn.classList.add('play-again');
@@ -106,7 +106,7 @@ const cards = Array.from(document.querySelectorAll('.card'));
 cards.forEach((card, index) => {
   card.addEventListener('click', (event) => {
     let cardName = game.cardsGrid[index];
-    console.log(game.cardsGrid)
+  
     //prevent click after reveal
     if ([...card.classList].indexOf(cardName) !== -1) {
       event.preventDefault();
@@ -126,13 +126,15 @@ cards.forEach((card, index) => {
         lives.innerHTML = game.lives;
         closeCard(clickedCards);
         if ('lost' === game.checkStatus()) {
+          closeCard(cards);
           showPopup('lost');
         }
       } else {
         if (clickedCards[0].dataset.name === clickedCards[1].dataset.name) {
-          game.updateMoves();
+          game.updateOpened();
           let status = game.checkStatus();
           if (status === 'won') {
+            closeCard(cards);
             showPopup('won');
           }          
         }
@@ -143,6 +145,8 @@ cards.forEach((card, index) => {
 
   })
 });
+
+
 
 function closeCard(cards) {
   console.log(cards);
