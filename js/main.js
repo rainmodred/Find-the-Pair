@@ -1,7 +1,7 @@
 class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
-    this.lives = 12;
+    this.lives = 10;
     this.moves = 0;
     this.opened = 0;
   }
@@ -10,7 +10,7 @@ class Game {
     //duplicate mouse bug
     //you won mesage bug
     this.moves = 0;
-    this.lives = 12;
+    this.lives = 10;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
@@ -38,11 +38,6 @@ class Game {
 
     return null;
   }
-  reveal() {
-    
-  }
-
-
   render() {}
 }
 
@@ -55,12 +50,36 @@ gameOverP.style.display = 'none';
 
 
 
+
+function reveal() {
+  const cards = Array.from(document.querySelectorAll('.card'));
+  cards.forEach((card,index)=> {
+    card.classList.remove('flipped');
+    let cardName = game.cardsGrid[index];
+    card.classList.add(cardName);
+  })
+}
+
+function deleteClasses() {
+  const cards = Array.from(document.querySelectorAll('.card'));
+  cards.forEach((card,ind)=> {
+    if (card.classList.length > 1) {
+      card.classList.forEach((item)=> {
+        if (item !== 'card' && item !== 'flipped') {
+          card.classList.remove(item);
+        }
+      })
+    }
+  })
+}
+
 function updateDom() {
   lives.innerHTML = game.lives;
   moves.innerHTML = game.moves;
 }
 
 function showPopup(status) {  
+  deleteClasses();
   const domSt = document.getElementsByClassName(status)[0];
   const spn = document.createElement('span');
   spn.classList.add('play-again');
