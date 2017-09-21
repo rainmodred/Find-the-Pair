@@ -1,14 +1,14 @@
 class Game {
   constructor() {
     this.cardsGrid = ['moon', 'moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma', 'new-moon', 'new-moon', 'goat', 'rat', 'summer', 'winter', 'rabbit', 'sigma'];
-    this.lives = 111;
+    this.lives = 12;
     this.moves = 0;
-    this.opened = 7;
+    this.opened = 0;
   }
   newGame() {    
-    this.opened = 7;
+    this.opened = 0;
     this.moves = 0;
-    this.lives = 111;
+    this.lives = 12;
     this.cardsGrid.sort((a, b) => {
       return 0.5 - Math.random();
     });
