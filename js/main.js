@@ -14,11 +14,8 @@ class Game {
     });
     updateDom();
   }
-
   updateLives() {
     this.lives--;
-
-
   }
   updateMoves() {
     this.moves++;
@@ -26,16 +23,13 @@ class Game {
   updateOpened() {
     this.opened++;
   }
-
   checkStatus() {
     if (this.lives === 0) {
       return 'lost';
     };
-
     if (this.opened === 8) {
       return 'won';
     };
-
     return null;
   }
   render() {}
@@ -43,13 +37,21 @@ class Game {
 
 const lives = document.querySelector('.lives');
 const moves = document.querySelector('.moves');
-const game = new Game();
-game.newGame();
 const gameOverP = document.querySelector('.game-over');
 gameOverP.style.display = 'none';
+const cards = Array.from(document.querySelectorAll('.card'));
+const game = new Game();
+game.newGame();
 
-
-
+function closeCard(cards) {
+  console.log(cards);
+  setTimeout(() => {
+    cards.forEach((card) => {
+      card.classList.remove(card.dataset.name);
+      card.classList.add('flipped');
+    });
+  }, 500);
+}
 
 function reveal() {
   const cards = Array.from(document.querySelectorAll('.card'));
@@ -60,36 +62,19 @@ function reveal() {
   })
 }
 
-// function deleteClasses() {
-//   const cards = Array.from(document.querySelectorAll('.card'));
-//   cards.forEach((card,ind)=> {
-//     if (card.classList.length > 1) {
-//       card.classList.forEach((item)=> {
-//         if (item !== 'card' && item !== 'flipped') {
-//           card.classList.remove(item);
-//         }
-//       })
-//     }
-//   })
-// }
-
 function updateDom() {
   lives.innerHTML = game.lives;
   moves.innerHTML = game.moves;
 }
 
-function showPopup(status) {  
-
+function showPopup(status) { 
   const domSt = document.getElementsByClassName(status)[0];
   const spn = document.createElement('span');
   spn.classList.add('play-again');
   spn.innerHTML = 'Play again';
-
   gameOverP.style.display = 'block';
   domSt.classList.add('status');
   domSt.appendChild(spn);
-
-
   spn.addEventListener('click', () => {
     gameOverP.style.display = 'none';    
     domSt.classList.remove('status');
@@ -98,26 +83,25 @@ function showPopup(status) {
   });
 }
 
-
-
+function editNodeClass(node, addClassName, removeClassName) {
+  node.classList.remove(removeClassName);
+  node.classList.add(addClassName);
+  node.dataset.name = addClassName;
+  return node;
+}
 
 let clickedCards = [];
-const cards = Array.from(document.querySelectorAll('.card'));
 cards.forEach((card, index) => {
   card.addEventListener('click', (event) => {
-    let cardName = game.cardsGrid[index];
-  
+    let cardName = game.cardsGrid[index];  
     //prevent click after reveal
     if ([...card.classList].indexOf(cardName) !== -1) {
       event.preventDefault();
       return;
     };
-    card.classList.remove('flipped');
-    card.classList.add(cardName);
-    card.dataset.name = cardName;
-    clickedCards.push(card);
 
-
+    let node = editNodeClass(card, cardName, 'flipped');
+    clickedCards.push(node);    
     if (clickedCards.length > 1) {
       game.updateMoves();
       moves.innerHTML = game.moves;
@@ -141,19 +125,6 @@ cards.forEach((card, index) => {
       }
     }
     if (clickedCards.length === 2) clickedCards = [];
-
-
   })
 });
 
-
-
-function closeCard(cards) {
-  console.log(cards);
-  setTimeout(() => {
-    cards.forEach((card) => {
-      card.classList.remove(card.dataset.name);
-      card.classList.add('flipped');
-    });
-  }, 500);
-}
