@@ -4,6 +4,7 @@
 body {
   font-family: 'Noto Sans', sans-serif;
   font-size: 15px;
+  box-sizing: border-box;
 }
 
 header {
@@ -28,6 +29,7 @@ p {
   position: fixed;
   top: 0px;
   background-color: #f9f9f9;
+  display: none;
 }
 
 .won {
@@ -64,8 +66,9 @@ p {
 
 .game {
   margin: 50px auto;
-  width: 415px;
+  width: 416px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -105,7 +108,7 @@ p {
 .back {
   z-index: 2;
   background-color: #fff;
-  background-image: url(../img/help_filled-100.png);
+  background-image: url(../img/help_filled.png);
   backface-visibility: hidden;
   transform: rotateY(-180deg);
 }
@@ -113,42 +116,43 @@ p {
 .flipped {
   transform: rotateY(180deg);
 }
+
 .card:hover .back {
-  background-image: url(../img/help-100.png);
+  background-image: url(../img/help.png);
 }
 
 .moon {
-  background: url(../img/icons8-Moon-100.png);
+  background: url(../img/Moon.png);
 }
 
 .new-moon {
-  background: url(../img/icons8-NewMoon-100.png);
+  background: url(../img/NewMoon.png);
 }
 
 .star {
-  background: url(../img/icons8-Star-100.png);
+  background: url(../img/Star.png);
 }
 
 .summer {
-  background: url(../img/icons8-Summer-100.png);
+  background: url(../img/Summer.png);
 }
 
 .winter {
-  background: url(../img/icons8-Winter-100.png);
+  background: url(../img/Winter.png);
 }
 
 .goat {
-  background: url(../img/icons8-YearofGoat-100.png);
+  background: url(../img/YearofGoat.png);
 }
 
 .rabbit {
-  background: url(../img/icons8-YearofRabbit-100.png);
+  background: url(../img/YearofRabbit.png);
 }
 
 .rat {
-  background: url(../img/icons8-YearofRat-100.png);
+  background: url(../img/YearofRat.png);
 }
 
 .sigma {
-  background: url(../img/icons8-Sigma-100.png);
+  background: url(../img/Sigma.png);
 }
