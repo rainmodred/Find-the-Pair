@@ -6,19 +6,17 @@ body {
   font-size: 15px;
 }
 
-footer {
-  width: 600px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-}
-
 header {
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
 }
 
-h1, h2, h3, h4,a,p {
+h1,
+h2,
+h3,
+h4,
+a,
+p {
   text-align: center;
 }
 
@@ -28,10 +26,9 @@ h1, h2, h3, h4,a,p {
   background-color: rgb(0, 0, 0, 0.5);
   overflow: hidden;
   position: fixed;
-  top:0px;
+  top: 0px;
   background-color: #f9f9f9;
 }
-
 
 .won {
   display: none;
@@ -55,12 +52,10 @@ h1, h2, h3, h4,a,p {
 .play-again {
   cursor: pointer;
   display: block;
-
 }
 
-.moves-container { 
+.moves-container {
   margin-left: 20%;
-  
 }
 
 .lives-container {
@@ -70,29 +65,30 @@ h1, h2, h3, h4,a,p {
 .game {
   margin: 50px auto;
   width: 415px;
-  display: flex;  
+  display: flex;
 }
 
-.card {  
+.card {
   width: 100px;
   height: 100px;
   margin: 1px;
-  border: 1px solid #CACAD8;  
+  border: 1px solid #cacad8;
 
   /* styles for flip */
   position: relative;
   transform-style: preserve-3d;
-  transition: all .25s ease-in-out;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
 .card:hover {
-  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.front, .back {
+.front,
+.back {
   position: absolute;
   z-index: 1;
   width: 100px;
@@ -122,37 +118,37 @@ h1, h2, h3, h4,a,p {
 }
 
 .moon {
-  background: url(../img/icons8-Moon-100.png)
+  background: url(../img/icons8-Moon-100.png);
 }
 
 .new-moon {
-  background: url(../img/icons8-NewMoon-100.png)  
+  background: url(../img/icons8-NewMoon-100.png);
 }
 
 .star {
-  background: url(../img/icons8-Star-100.png)
+  background: url(../img/icons8-Star-100.png);
 }
 
 .summer {
-  background: url(../img/icons8-Summer-100.png)
+  background: url(../img/icons8-Summer-100.png);
 }
 
-.winter { 
-  background: url(../img/icons8-Winter-100.png)
+.winter {
+  background: url(../img/icons8-Winter-100.png);
 }
 
 .goat {
-  background: url(../img/icons8-YearofGoat-100.png)
+  background: url(../img/icons8-YearofGoat-100.png);
 }
 
 .rabbit {
-  background: url(../img/icons8-YearofRabbit-100.png)
+  background: url(../img/icons8-YearofRabbit-100.png);
 }
 
-.rat { 
-  background: url(../img/icons8-YearofRat-100.png)
+.rat {
+  background: url(../img/icons8-YearofRat-100.png);
 }
 
 .sigma {
-  background: url(../img/icons8-Sigma-100.png)
+  background: url(../img/icons8-Sigma-100.png);
 }
