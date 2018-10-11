@@ -1,6 +1,6 @@
 class Game {
   constructor() {
-    this.cardsGrid = [
+    this.cardsArray = [
       'moon',
       'moon',
       'goat',
@@ -22,25 +22,36 @@ class Game {
     this.moves = 0;
     this.opened = 0;
 
+    this.cardsClicked = 0;
+    this.clickedCardsArray = [];
+
     this.gameDom = document.querySelector('.game');
     this.gameOverDom = document.querySelector('.game-over');
     this.movesDom = document.querySelector('.moves');
     this.livesDom = document.querySelector('.lives');
+    this.createCards();
   }
   newGame() {
     this.opened = 0;
     this.moves = 0;
     this.lives = 12;
-    this.cardsGrid.sort((a, b) => {
+    this.cardsArray.sort((a, b) => {
       return 0.5 - Math.random();
     });
+
+    this.movesDom.textContent = +this.moves;
+    this.livesDom.textContent = +this.lives;
     // updateDom();
+
+    
+    this.handleCardClick();
   }
   createCards() {
-    this.cardsGrid.forEach(cardName => {
+    this.cardsArray.forEach(cardName => {
       const card = document.createElement('div');
       card.classList.add('card');
       card.classList.add('flipped');
+      card.dataset.name = cardName;
 
       const front = document.createElement('div');
       front.classList.add('front');
@@ -53,115 +64,106 @@ class Game {
       card.appendChild(back);
     });
   }
+
+  editCard(node, addClass, removeClass) {
+    node.classList.remove('flipped');
+    node.classList.add(addClass);
+    node.dataset.name = addClass;
+    return node;
+  }
+
+  handleCardClick() {
+    const cards = [...document.querySelectorAll('.card')];
+    cards.forEach((card, index) => {
+      card.addEventListener('click', event => {
+        if ([...card.classList].indexOf('flipped') === -1 || this.clickedCardsArray.length > 1) {
+          return;         
+        };
+        let cardName = this.cardsArray[index];
+        card.classList.remove('flipped');
+        card.classList.add(cardName);
+
+        this.clickedCardsArray.push(card);
+        if (this.clickedCardsArray.length === 2) {
+          this.checkGameOver();
+        }        
+      });
+    });
+  }
+
+  closeCards() {
+    setTimeout(() => {
+      this.clickedCardsArray.forEach(card => {
+        card.classList.remove(card.dataset.name);
+        card.classList.add('flipped');
+      });
+      this.clickedCardsArray = [];
+    }, 1000);
+  }
+  checkGameOver() {
+    if (this.compareCards()) {
+      this.clickedCardsArray = [];
+      this.opened++;
+      this.updateMoves();
+      if (this.opened === 8) {
+        this.showGameOver('won')
+      }
+    } else {
+      this.closeCards();
+      this.updateLives();
+      if (this.lives === 0) {
+        this.showGameOver('lost');
+      }
+      this.updateMoves();
+    }
+  }
+
+  showGameOver(status) {
+    const domSt = document.getElementsByClassName(status)[0];
+    const span = document.createElement('span');
+    span.classList.add('play-again');
+    span.innerHTML = 'Play again';
+    this.gameOverDom.style.display = 'block';
+    domSt.classList.add('status');
+    domSt.appendChild(span);
+    span.addEventListener('click', () => {
+      this.gameOverDom.style.display = 'none';
+      domSt.classList.remove('status');
+      game.newGame();
+      span.remove();
+    });
+  }
   updateLives() {
     this.lives--;
+    this.livesDom.textContent = this.lives;
   }
   updateMoves() {
     this.moves++;
+    this.movesDom.textContent = this.moves;
   }
   updateOpened() {
     this.opened++;
   }
-  checkStatus() {
-    if (this.lives === 0) {
-      return 'lost';
-    }
-    if (this.opened === 8) {
-      return 'won';
-    }
-    return null;
+  compareCards() {
+    if (
+      this.clickedCardsArray[0].dataset.name ===
+      this.clickedCardsArray[1].dataset.name
+    ) {
+      return true;
+    } else return false;
   }
-  render() {}
+
+  reveal() {
+    const cards = [...document.querySelectorAll('.card')];
+    cards.forEach((card, index) => {
+      card.classList.remove('flipped');
+      const cardName = this.cardsArray[index];
+      card.classList.add(cardName);
+    });
+  }
 }
 
 const game = new Game();
-game.createCards();
-// game.createCards();
-// const cards = Array.from(document.querySelectorAll('.card'));
+game.newGame();
 
-// game.newGame();
 
-// function closeCard(cards) {
-//   console.log(cards);
-//   setTimeout(() => {
-//     cards.forEach((card) => {
-//       card.classList.remove(card.dataset.name);
-//       card.classList.add('flipped');
-//     });
-//   }, 500);
-// }
-
-// function reveal() {
-//   const cards = Array.from(document.querySelectorAll('.card'));
-//   cards.forEach((card,index)=> {
-//     card.classList.remove('flipped');
-//     let cardName = game.cardsGrid[index];
-//     card.classList.add(cardName);
-//   })
-// }
-
-// function updateDom() {
-//   lives.innerHTML = game.lives;
-//   moves.innerHTML = game.moves;
-// }
-
-// function showPopup(status) {
-//   const domSt = document.getElementsByClassName(status)[0];
-//   const spn = document.createElement('span');
-//   spn.classList.add('play-again');
-//   spn.innerHTML = 'Play again';
-//   gameOverP.style.display = 'block';
-//   domSt.classList.add('status');
-//   domSt.appendChild(spn);
-//   spn.addEventListener('click', () => {
-//     gameOverP.style.display = 'none';
-//     domSt.classList.remove('status');
-//     game.newGame();
-//     spn.remove();
-//   });
-// }
-
-// function editNodeClass(node, addClassName, removeClassName) {
-//   node.classList.remove(removeClassName);
-//   node.classList.add(addClassName);
-//   node.dataset.name = addClassName;
-//   return node;
-// }
-
-// let clickedCards = [];
-// cards.forEach((card, index) => {
-//   card.addEventListener('click', (event) => {
-//     let cardName = game.cardsGrid[index];
-//     //prevent click after reveal
-//     if ([...card.classList].indexOf(cardName) !== -1) {
-//       event.preventDefault();
-//       return;
-//     };
-
-//     let node = editNodeClass(card, cardName, 'flipped');
-//     clickedCards.push(node);
-//     if (clickedCards.length > 1) {
-//       game.updateMoves();
-//       moves.innerHTML = game.moves;
-//       if (clickedCards[0].dataset.name !== clickedCards[1].dataset.name) {
-//         game.updateLives();
-//         lives.innerHTML = game.lives;
-//         closeCard(clickedCards);
-//         if ('lost' === game.checkStatus()) {
-//           closeCard(cards);
-//           showPopup('lost');
-//         }
-//       } else {
-//         if (clickedCards[0].dataset.name === clickedCards[1].dataset.name) {
-//           game.updateOpened();
-//           let status = game.checkStatus();
-//           if (status === 'won') {
-//             closeCard(cards);
-//             showPopup('won');
-//           }
-//         }
-//       }
-//     }
-//     if (clickedCards.length === 2) clickedCards = [];
-//   })
-// });
