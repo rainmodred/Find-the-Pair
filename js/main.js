@@ -1,22 +1,22 @@
 class Game {
   constructor() {
     this.cardsArray = [
-      'moon',
-      'moon',
-      'goat',
-      'rat',
-      'summer',
-      'winter',
-      'rabbit',
-      'sigma',
-      'new-moon',
-      'new-moon',
-      'goat',
-      'rat',
-      'summer',
-      'winter',
-      'rabbit',
-      'sigma'
+      "moon",
+      "moon",
+      "goat",
+      "rat",
+      "summer",
+      "winter",
+      "rabbit",
+      "sigma",
+      "new-moon",
+      "new-moon",
+      "goat",
+      "rat",
+      "summer",
+      "winter",
+      "rabbit",
+      "sigma"
     ];
     this.lives = 12;
     this.moves = 0;
@@ -25,10 +25,10 @@ class Game {
     this.cardsClicked = 0;
     this.clickedCardsArray = [];
 
-    this.gameDom = document.querySelector('.game');
-    this.gameOverDom = document.querySelector('.game-over');
-    this.movesDom = document.querySelector('.moves');
-    this.livesDom = document.querySelector('.lives');
+    this.gameDom = document.querySelector(".game");
+    this.gameOverDom = document.querySelector(".game-over");
+    this.movesDom = document.querySelector(".moves");
+    this.livesDom = document.querySelector(".lives");
     this.createCards();
   }
   newGame() {
@@ -43,21 +43,20 @@ class Game {
     this.livesDom.textContent = +this.lives;
     // updateDom();
 
-    
     this.handleCardClick();
   }
   createCards() {
     this.cardsArray.forEach(cardName => {
-      const card = document.createElement('div');
-      card.classList.add('card');
-      card.classList.add('flipped');
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.classList.add("flipped");
       card.dataset.name = cardName;
 
-      const front = document.createElement('div');
-      front.classList.add('front');
+      const front = document.createElement("div");
+      front.classList.add("front");
 
-      const back = document.createElement('div');
-      back.classList.add('back');
+      const back = document.createElement("div");
+      back.classList.add("back");
 
       this.gameDom.appendChild(card);
       card.appendChild(front);
@@ -66,27 +65,30 @@ class Game {
   }
 
   editCard(node, addClass, removeClass) {
-    node.classList.remove('flipped');
+    node.classList.remove("flipped");
     node.classList.add(addClass);
     node.dataset.name = addClass;
     return node;
   }
 
   handleCardClick() {
-    const cards = [...document.querySelectorAll('.card')];
+    const cards = [...document.querySelectorAll(".card")];
     cards.forEach((card, index) => {
-      card.addEventListener('click', event => {
-        if ([...card.classList].indexOf('flipped') === -1 || this.clickedCardsArray.length > 1) {
-          return;         
-        };
+      card.addEventListener("click", event => {
+        if (
+          [...card.classList].indexOf("flipped") === -1 ||
+          this.clickedCardsArray.length > 1
+        ) {
+          return;
+        }
         let cardName = this.cardsArray[index];
-        card.classList.remove('flipped');
+        card.classList.remove("flipped");
         card.classList.add(cardName);
 
         this.clickedCardsArray.push(card);
         if (this.clickedCardsArray.length === 2) {
           this.checkGameOver();
-        }        
+        }
       });
     });
   }
@@ -95,7 +97,7 @@ class Game {
     setTimeout(() => {
       this.clickedCardsArray.forEach(card => {
         card.classList.remove(card.dataset.name);
-        card.classList.add('flipped');
+        card.classList.add("flipped");
       });
       this.clickedCardsArray = [];
     }, 1000);
@@ -106,13 +108,13 @@ class Game {
       this.opened++;
       this.updateMoves();
       if (this.opened === 8) {
-        this.showGameOver('won')
+        this.showGameOver("won");
       }
     } else {
       this.closeCards();
       this.updateLives();
       if (this.lives === 0) {
-        this.showGameOver('lost');
+        this.showGameOver("lost");
       }
       this.updateMoves();
     }
@@ -120,15 +122,15 @@ class Game {
 
   showGameOver(status) {
     const domSt = document.getElementsByClassName(status)[0];
-    const span = document.createElement('span');
-    span.classList.add('play-again');
-    span.innerHTML = 'Play again';
-    this.gameOverDom.style.display = 'block';
-    domSt.classList.add('status');
+    const span = document.createElement("span");
+    span.classList.add("play-again");
+    span.innerHTML = "Play again";
+    this.gameOverDom.style.display = "block";
+    domSt.classList.add("status");
     domSt.appendChild(span);
-    span.addEventListener('click', () => {
-      this.gameOverDom.style.display = 'none';
-      domSt.classList.remove('status');
+    span.addEventListener("click", () => {
+      this.gameOverDom.style.display = "none";
+      domSt.classList.remove("status");
       game.newGame();
       span.remove();
     });
@@ -154,9 +156,9 @@ class Game {
   }
 
   reveal() {
-    const cards = [...document.querySelectorAll('.card')];
+    const cards = [...document.querySelectorAll(".card")];
     cards.forEach((card, index) => {
-      card.classList.remove('flipped');
+      card.classList.remove("flipped");
       const cardName = this.cardsArray[index];
       card.classList.add(cardName);
     });
@@ -165,5 +167,3 @@ class Game {
 
 const game = new Game();
 game.newGame();
-
-
