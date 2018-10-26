@@ -20,11 +20,6 @@ export default class Cards {
     ];
   }
 
-  compareCards(card1, card2) {
-    if (card1 === card2) return true;
-    return false;
-  }
-
   randomCards() {
     this.cardsArray.sort((a, b) => {
       return 0.5 - Math.random();

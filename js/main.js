@@ -1,169 +1,124 @@
-class Game {
-  constructor() {
-    this.cardsArray = [
-      "moon",
-      "moon",
-      "goat",
-      "rat",
-      "summer",
-      "winter",
-      "rabbit",
-      "sigma",
-      "new-moon",
-      "new-moon",
-      "goat",
-      "rat",
-      "summer",
-      "winter",
-      "rabbit",
-      "sigma"
-    ];
-    this.lives = 12;
-    this.moves = 0;
-    this.opened = 0;
+import Cards from './Cards.js';
+import Game from './Game.js';
 
-    this.cardsClicked = 0;
-    this.clickedCardsArray = [];
+function createCards() {
+  cards.cardsArray.forEach(cardName => {
+    const card = document.createElement('div');
 
-    this.gameDom = document.querySelector(".game");
-    this.gameOverDom = document.querySelector(".game-over");
-    this.movesDom = document.querySelector(".moves");
-    this.livesDom = document.querySelector(".lives");
-    this.createCards();
-  }
-  newGame() {
-    this.opened = 0;
-    this.moves = 0;
-    this.lives = 12;
-    this.cardsArray.sort((a, b) => {
-      return 0.5 - Math.random();
+    card.classList.add('card');
+    card.classList.add('flipped');
+    card.dataset.name = cardName;
+
+    const front = document.createElement('div');
+    front.classList.add('front');
+
+    const back = document.createElement('div');
+    back.classList.add('back');
+
+    handleCardClick(card);
+    gameDom.appendChild(card);
+    card.appendChild(front);
+    card.appendChild(back);
+  });
+}
+
+function closeCards(cards, ms) {
+  console.log(cards);
+  setTimeout(() => {
+    cards.forEach(card => {
+      card.classList.remove(card.dataset.name);
+      card.classList.add('flipped');
     });
+  }, ms);
+}
 
-    this.movesDom.textContent = +this.moves;
-    this.livesDom.textContent = +this.lives;
-    // updateDom();
+function showGameOver(status) {
+  const domSt = document.getElementsByClassName(status)[0];
+  const span = document.createElement('span');
+  const cardsDom = document.querySelectorAll('.card');
+  span.classList.add('play-again');
+  span.innerHTML = 'Play again';
+  gameOverDom.style.display = 'block';
+  domSt.classList.add('status');
+  domSt.appendChild(span);
+  span.addEventListener('click', () => {
+    gameOverDom.style.display = 'none';
+    domSt.classList.remove('status');
 
-    this.handleCardClick();
-  }
-  createCards() {
-    this.cardsArray.forEach(cardName => {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      card.classList.add("flipped");
-      card.dataset.name = cardName;
+    startNewGame(LIVES);
+    span.remove();
+  });
+}
 
-      const front = document.createElement("div");
-      front.classList.add("front");
+function updateStats() {
+  movesDom.textContent = game.moves;
+  livesDom.textContent = game.lives;
+}
 
-      const back = document.createElement("div");
-      back.classList.add("back");
-
-      this.gameDom.appendChild(card);
-      card.appendChild(front);
-      card.appendChild(back);
-    });
-  }
-
-  editCard(node, addClass, removeClass) {
-    node.classList.remove("flipped");
-    node.classList.add(addClass);
-    node.dataset.name = addClass;
-    return node;
-  }
-
-  handleCardClick() {
-    const cards = [...document.querySelectorAll(".card")];
-    cards.forEach((card, index) => {
-      card.addEventListener("click", event => {
-        if (
-          [...card.classList].indexOf("flipped") === -1 ||
-          this.clickedCardsArray.length > 1
-        ) {
-          return;
-        }
-        let cardName = this.cardsArray[index];
-        card.classList.remove("flipped");
-        card.classList.add(cardName);
-
-        this.clickedCardsArray.push(card);
-        if (this.clickedCardsArray.length === 2) {
-          this.checkGameOver();
-        }
-      });
-    });
-  }
-
-  closeCards() {
-    setTimeout(() => {
-      this.clickedCardsArray.forEach(card => {
-        card.classList.remove(card.dataset.name);
-        card.classList.add("flipped");
-      });
-      this.clickedCardsArray = [];
-    }, 1000);
-  }
-  checkGameOver() {
-    if (this.compareCards()) {
-      this.clickedCardsArray = [];
-      this.opened++;
-      this.updateMoves();
-      if (this.opened === 8) {
-        this.showGameOver("won");
-      }
-    } else {
-      this.closeCards();
-      this.updateLives();
-      if (this.lives === 0) {
-        this.showGameOver("lost");
-      }
-      this.updateMoves();
+function handleCardClick(card) {
+  card.addEventListener('click', () => {
+    //probably 3 click bug
+    if ([...card.classList].indexOf('flipped') === -1 || clickedCards.length > 1) {
+      return;
     }
-  }
+    let cardName = card.dataset.name;
+    card.classList.remove('flipped');
+    card.classList.add(cardName);
 
-  showGameOver(status) {
-    const domSt = document.getElementsByClassName(status)[0];
-    const span = document.createElement("span");
-    span.classList.add("play-again");
-    span.innerHTML = "Play again";
-    this.gameOverDom.style.display = "block";
-    domSt.classList.add("status");
-    domSt.appendChild(span);
-    span.addEventListener("click", () => {
-      this.gameOverDom.style.display = "none";
-      domSt.classList.remove("status");
-      game.newGame();
-      span.remove();
-    });
-  }
-  updateLives() {
-    this.lives--;
-    this.livesDom.textContent = this.lives;
-  }
-  updateMoves() {
-    this.moves++;
-    this.movesDom.textContent = this.moves;
-  }
-  updateOpened() {
-    this.opened++;
-  }
-  compareCards() {
-    if (
-      this.clickedCardsArray[0].dataset.name ===
-      this.clickedCardsArray[1].dataset.name
-    ) {
-      return true;
-    } else return false;
-  }
+    clickedCards.push(card);
 
-  reveal() {
-    const cards = [...document.querySelectorAll(".card")];
-    cards.forEach((card, index) => {
-      card.classList.remove("flipped");
-      const cardName = this.cardsArray[index];
-      card.classList.add(cardName);
-    });
+    if (clickedCards.length === 2) {
+      compareCards();
+    }
+  });
+}
+
+function compareCards() {
+  game.updateMoves();
+  let compare = game.compareCards(...clickedCards);
+  if (compare) {
+    game.updateOpened();
+    clickedCards = [];
+    if (game.opened === game.openToWin) {
+      showGameOver('won');
+    }
+  } else {
+    game.updateLives();
+
+    if (game.lives === 0) {
+      showGameOver('lost');
+    }
+    closeCards(clickedCards, 1000);
+    clickedCards = [];
+    updateStats();
   }
 }
 
-const game = new Game();
-game.newGame();
+function removeCards() {
+  while (gameDom.hasChildNodes()) {
+    gameDom.removeChild(gameDom.lastChild);
+  }
+}
+
+function startNewGame(lives) {
+  removeCards();
+  game.newGame(lives);
+  cards.randomCards();
+  createCards();
+  movesDom.textContent = 0;
+  livesDom.textContent = 0;
+}
+
+//FIX PLAY AGAIN
+const LIVES = 12;
+
+const gameDom = document.querySelector('.game');
+const gameOverDom = document.querySelector('.game-over');
+const movesDom = document.querySelector('.moves');
+const livesDom = document.querySelector('.lives');
+
+const game = new Game(LIVES);
+const cards = new Cards();
+
+let clickedCards = [];
+startNewGame(LIVES);
