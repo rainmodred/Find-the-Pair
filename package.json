@@ -1,0 +1,26 @@
+{
+  "name": "Find-the-Pair",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html index.js ",
+    "build": "parcel build index.html index.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainmodred/Find-the-Pair.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainmodred/Find-the-Pair/issues"
+  },
+  "homepage": "https://github.com/rainmodred/Find-the-Pair#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "parcel-bundler": "^1.12.4"
+  }
+}
